@@ -1,0 +1,29 @@
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #ed1c24;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 e dark mode class strategy active korar jonno nichei eita likhe dao */
+@theme {
+  --color-background: white;
+  --color-foreground: black;
+}
+
+/* Jodi tumi class based dark mode chao */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
