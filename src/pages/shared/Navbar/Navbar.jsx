@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import TeaLogo from "../TeaLogo/TeaLogo";
 
-const Navbar = () => {
-    const [isSidebarOpen, setSidebarOpen] = useState(true);
+const Navbar = ({ isSidebarOpen, setSidebarOpen }) => {
+    // const [isSidebarOpen, setSidebarOpen] = useState(true);
 
     const menuData = [
         { path: "/favourites", label: "Favourites", icon: "fa-star text-orange-400" },
@@ -30,7 +31,7 @@ const Navbar = () => {
     }, [darkMode]);
 
     return (
-        <div className="min-h-screen bg-[#F8F9FA] font-sans text-gray-800">
+        <div className=" bg-[#F8F9FA] font-sans text-gray-800">
             {/* CSS directly in JS using a style tag - better to put in index.css */}
             <style>{`
                 .custom-scrollbar::-webkit-scrollbar {
@@ -63,7 +64,10 @@ const Navbar = () => {
             {/* --- TOP NAVBAR --- */}
             <nav className="fixed top-0 w-full bg-white h-16 flex items-center justify-between px-4 md:px-10 border-b border-gray-100 z-50 shadow-sm">
                 <div>
-                    <img src="https://www.brac.net/images/brac-logo.png" alt="BRAC" className="h-10" />
+                   <div className="w-2/4"> 
+                    <TeaLogo /> 
+                </div>
+
                 </div>
                 <div className="flex items-center gap-6">
 
@@ -101,9 +105,9 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            <div className="flex pt-16 h-screen overflow-hidden">
+            <div className="flex pt-16  overflow-hidden">
                 {/* --- SIDEBAR (Desktop) --- */}
-                <aside className={`hidden lg:flex flex-col bg-white border-r border-gray-100 transition-all duration-500 ease-in-out relative ${isSidebarOpen ? 'w-72' : 'w-24'}`}>
+                <aside className={`fixed left-0 top-16 h-[calc(100vh-64px)] hidden lg:flex flex-col bg-white border-r border-gray-100 transition-all duration-500 ease-in-out z-40 ${isSidebarOpen ? 'w-72' : 'w-24'}`}>
                     <button
                         onClick={() => setSidebarOpen(!isSidebarOpen)}
                         className="absolute -right-3 top-5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full w-6 h-6 flex items-center justify-center shadow-md hover:bg-gray-500 dark:hover:bg-gray-700 transition-all z-10"
@@ -137,73 +141,39 @@ const Navbar = () => {
                         ))}
                     </ul>
                 </aside>
-
-                {/* --- MAIN CONTENT --- */}
-                <main className="flex-1 overflow-y-auto p-4 md:p-10 mb-20 lg:mb-0 bg-[#F8F9FA]">
-                    <div className="max-w-6xl mx-auto">
-                        <div className="w-full h-48 md:h-80 bg-gray-200 rounded-3xl mb-8 overflow-hidden shadow-sm relative">
-                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200" className="w-full h-full object-cover" alt="Banner" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-                                <h2 className="text-white text-2xl md:text-3xl font-bold">Data Privacy Matters</h2>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <InfoCard icon="fa-envelope" color="bg-red-50 text-red-500" title="Connect Gmail" subtitle="Check unread mail" />
-                            <InfoCard icon="fa-location-dot" color="bg-blue-50 text-blue-500" title="Location" subtitle="Fetch your current location" />
-                            <InfoCard icon="fa-link" color="bg-purple-50 text-purple-500" title="Quick Links" subtitle="ERP, Aarong, BRAC Int'l" />
-                        </div>
-                    </div>
-                </main>
             </div>
 
+           
             {/* --- BOTTOM NAVIGATION (Mobile) --- */}
-            <div className="btm-nav lg:hidden border-t border-gray-100 bg-white h-16 z-[100] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-
-                {/* --- Mobile Menu Dropdown (Scrollable) --- */}
-                <div className="btm-nav flex justify-evenly lg:hidden border-t border-gray-100 bg-white  z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 h-16 z-[100] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+                <div className="flex justify-evenly items-center h-full w-full">
 
                     {/* 1. Notification */}
-                    <div className="dropdown dropdown-top dropdown-center">
-                        <button tabIndex={0} className=" items-center gap-1 text-gray-500">
+                    <div className="dropdown dropdown-top dropdown-center flex-1">
+                        <button tabIndex={0} className="flex flex-col items-center w-full text-gray-500 dark:text-gray-400">
                             <i className="fa-solid fa-bell text-xl"></i>
                             <span className="text-[10px] font-medium">Notification</span>
                         </button>
-                        <div tabIndex={0} className="dropdown-content menu p-5 shadow-2xl bg-white rounded-3xl mb-4 animate-in slide-in-from-bottom-5">
-                            <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                        <div tabIndex={0} className="dropdown-content menu p-5 shadow-2xl bg-white dark:bg-gray-800 rounded-3xl mb-4 animate-in slide-in-from-bottom-5">
+                            <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
                             <p className="text-center text-gray-400 text-sm py-6">No new notifications</p>
                         </div>
                     </div>
 
                     {/* 2. Menu */}
-                    <div className="dropdown dropdown-top dropdown-center">
-                        <button tabIndex={0} className=" items-center  text-gray-500">
+                    <div className="dropdown dropdown-top dropdown-center flex-1">
+                        <button tabIndex={0} className="flex flex-col items-center w-full text-gray-500 dark:text-gray-400">
                             <i className="fa-solid fa-grid-2 text-xl"></i>
                             <span className="text-[10px] font-medium">Menu</span>
                         </button>
-
-                        {/* Dropdown Content Box */}
-                        <div tabIndex={0} className="dropdown-content p-5 shadow-2xl bg-white rounded-t-[2.5rem] mb-0 animate-in slide-in-from-bottom-5">
-
-                            {/* Top Handle (Drag bar indicator) */}
-                            <div className="w-16 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-
-                            {/* Content Container - width 100% and centered items */}
-                            <div className="w-full  flex flex-col items-center">
+                        <div tabIndex={0} className="dropdown-content p-5 shadow-2xl bg-white dark:bg-gray-800 rounded-t-[2.5rem] mb-0 animate-in slide-in-from-bottom-5">
+                            <div className="w-16 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-6"></div>
+                            <div className="w-full flex flex-col items-center">
                                 <h3 className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mb-5">Quick Services</h3>
-
-                                {/* Grid layout with more width */}
-                                <div className="grid grid-cols-1 gap-4 w-full  max-h-[40vh] overflow-y-auto custom-scrollbar pb-8">
+                                <div className="grid grid-cols-2 gap-4 w-full max-h-[40vh] overflow-y-auto custom-scrollbar pb-8">
                                     {menuData.map((item, index) => (
-                                        <NavLink
-                                            key={index}
-                                            to={item.path}
-                                            className="flex flex-col items-center gap-3 p-3 rounded-2xl hover:bg-red-50 transition-all border border-gray-50 active:scale-95"
-                                        >
-
-                                            <span className="text-[10px] text-center font-bold text-gray-700 leading-tight">
-                                                {item.label}
-                                            </span>
+                                        <NavLink key={index} to={item.path} className="flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all border border-gray-50 dark:border-gray-700">
+                                            <span className="text-[10px] text-center font-bold text-gray-700 dark:text-gray-200">{item.label}</span>
                                         </NavLink>
                                     ))}
                                 </div>
@@ -212,19 +182,19 @@ const Navbar = () => {
                     </div>
 
                     {/* 3. Home */}
-                    <button className="  ">
+                    <button className="flex flex-col items-center flex-1 text-red-500">
                         <i className="fa-solid fa-house text-xl"></i>
                         <span className="text-[10px] font-bold">Home</span>
                     </button>
 
                     {/* 4. User */}
-                    <div className="dropdown dropdown-top dropdown-end">
-                        <button tabIndex={0} className=" items-center  text-gray-500">
+                    <div className="dropdown dropdown-top dropdown-end flex-1">
+                        <button tabIndex={0} className="flex flex-col items-center w-full text-gray-500 dark:text-gray-400">
                             <i className="fa-solid fa-user text-xl"></i>
                             <span className="text-[10px] font-medium">User</span>
                         </button>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow-2xl bg-white rounded-2xl w-52 mb-4 border border-gray-50">
-                            <li><a><i className="fa-solid fa-user-circle"></i> Profile</a></li>
+                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow-2xl bg-white dark:bg-gray-800 rounded-2xl w-52 mb-4 border border-gray-50 dark:border-gray-700">
+                            <li><a className="dark:text-gray-200"><i className="fa-solid fa-user-circle"></i> Profile</a></li>
                             <li><a className="text-red-500"><i className="fa-solid fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </div>
